@@ -10,14 +10,28 @@
         margin: 0;
         font-family: 'Poppins', sans-serif;
         background: #0f0f0f;
-        color: #d1d1d1; /* CINZA NAS LETRAS */
+        color: #d1d1d1;
         text-align: center;
+        overflow-x: hidden;
     }
 
-    /* Fundo com brilho rosé */
+    /* FUNDO ANIMADO */
+    @keyframes gradientMove {
+        0% { background-position: 0% 0%; }
+        50% { background-position: 100% 100%; }
+        100% { background-position: 0% 0%; }
+    }
+
     .bg {
-        background: radial-gradient(circle at top, rgba(255, 182, 193, 0.2), #0f0f0f 70%);
         padding: 40px 20px;
+        min-height: 100vh;
+        background: linear-gradient(135deg,
+            rgba(255, 182, 193, 0.25),
+            rgba(20, 20, 20, 0.9),
+            rgba(255, 182, 193, 0.25)
+        );
+        background-size: 200% 200%;
+        animation: gradientMove 12s ease-in-out infinite;
     }
 
     /* Avatar */
@@ -26,7 +40,7 @@
         height: 140px;
         border-radius: 50%;
         border: 4px solid #ffb6c1;
-        box-shadow: 0 0 20px #ffb6c1aa;
+        box-shadow: 0 0 22px #ffb6c1aa;
         object-fit: cover;
         margin-bottom: 15px;
     }
@@ -34,14 +48,14 @@
     h1 {
         font-size: 2.4rem;
         margin-bottom: 5px;
-        color: #d1d1d1; /* CINZA */
+        color: #d1d1d1;
     }
 
     p.subtitle {
         font-size: 1.1rem;
         opacity: 0.8;
         margin-bottom: 30px;
-        color: #d1d1d1; /* CINZA */
+        color: #d1d1d1;
     }
 
     /* Botões */
@@ -53,23 +67,23 @@
         margin: 15px auto;
         font-size: 1.1rem;
         font-weight: 600;
-        color: #d1d1d1; /* CINZA NAS LETRAS DOS BOTÕES */
+        color: #d1d1d1;
         background: #1a1a1a;
         border-radius: 14px;
         border: 2px solid #ffb6c1;
         text-decoration: none;
         box-shadow: 0 0 15px #ffb6c1aa;
-        transition: 0.25s;
+        transition: .25s;
         position: relative;
         overflow: hidden;
     }
 
     .btn:hover {
         transform: scale(1.05);
-        box-shadow: 0 0 25px #ffb6c1cc;
+        box-shadow: 0 0 30px #ffb6c1dd;
     }
 
-    /* Icone dentro do botão */
+    /* Icone do botão */
     .btn img {
         width: 34px;
         height: 34px;
