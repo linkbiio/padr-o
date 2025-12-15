@@ -1,3 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trader - Link da Bio</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #000;
+  overflow: hidden;
+}
+
+/* CANVAS */
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+/* OVERLAY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  z-index: 2;
+}
+
+/* CONTEÚDO */
+.container {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  max-width: 380px;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+/* TOPO */
+.trader-name {
+  color: #f2f2f2;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+}
+
+/* BOTÕES */
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #e0e0e0;
+  background: linear-gradient(180deg, #1a1a1a, #0e0e0e);
+  border: 1px solid #2a2a2a;
+  transition: 0.25s;
+}
+
+.btn:hover {
+  background: #151515;
+  transform: scale(1.03);
+}
+
+.footer {
+  margin-top: 26px;
+  font-size: 11px;
+  color: #777;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="chart"></canvas>
+<div class="overlay"></div>
+
+<div class="container">
+  <div class="content">
+
+    <div class="trader-name">THURZIN TRADER</div>
+
+    <div class="buttons">
+      <a href="https://SEU-LINK-AFILIADO" class="btn" target="_blank">
+        Criar conta na corretora
+      </a>
+      <a href="https://wa.me/5599999999999" class="btn" target="_blank">
+        Falar comigo no WhatsApp
+      </a>
+      <a href="https://chat.whatsapp.com/SEU-GRUPO" class="btn" target="_blank">
+        Grupo da Live
+      </a>
+    </div>
+
+    <div class="footer">
+      Trader profissional • Conteúdo educacional
+    </div>
+
+  </div>
+</div>
+
 <script>
 const canvas = document.getElementById("chart");
 const ctx = canvas.getContext("2d");
@@ -9,43 +131,30 @@ function resize() {
 resize();
 window.addEventListener("resize", resize);
 
-/* CONFIGURAÇÕES */
+/* CONFIG */
 const candleWidth = 7;
-const gap = 6;
-const speed = 0.35; // velocidade do gráfico
-const maxCandles = Math.ceil(canvas.width / (candleWidth + gap)) + 5;
-
+const gap = 5;
+const maxCandles = 90;
 let candles = [];
-let basePrice = canvas.height * 0.6;
+let price = canvas.height * 0.6;
 
 /* CRIA VELA */
-function generateCandle(x) {
-  const open = basePrice;
-  const direction = Math.random() > 0.48 ? -1 : 1;
-  const body = Math.random() * 28 + 8;
+function newCandle() {
+  const open = price;
+  const direction = Math.random() > 0.45 ? -1 : 1; // tendência levemente bullish
+  const body = Math.random() * 35 + 8;
   const close = open + body * direction;
-  const high = Math.min(open, close) - Math.random() * 16;
-  const low = Math.max(open, close) + Math.random() * 16;
+  const high = Math.min(open, close) - Math.random() * 18;
+  const low = Math.max(open, close) + Math.random() * 18;
 
-  basePrice = close;
-
-  return { x, open, close, high, low };
+  price = close;
+  candles.push({ open, close, high, low });
+  if (candles.length > maxCandles) candles.shift();
 }
-
-/* INICIALIZA */
-function initCandles() {
-  candles = [];
-  let x = 0;
-  for (let i = 0; i < maxCandles; i++) {
-    candles.push(generateCandle(x));
-    x += candleWidth + gap;
-  }
-}
-initCandles();
 
 /* GRID */
 function drawGrid() {
-  ctx.strokeStyle = "#111";
+  ctx.strokeStyle = "#121212";
   ctx.lineWidth = 1;
 
   for (let x = 0; x < canvas.width; x += 80) {
@@ -63,42 +172,54 @@ function drawGrid() {
   }
 }
 
-/* LOOP */
-function animate() {
+/* DESENHO */
+function drawChart() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawGrid();
 
-  candles.forEach(c => {
-    c.x -= speed;
+  let x = canvas.width - candles.length * (candleWidth + gap);
 
-    const color = c.close < c.open ? "#b5b5b5" : "#e0e0e0";
+  ctx.beginPath();
+  candles.forEach((c, i) => {
+    const mid = (c.open + c.close) / 2;
+    if (i === 0) ctx.moveTo(x + candleWidth / 2, mid);
+    else ctx.lineTo(x + candleWidth / 2, mid);
+    x += candleWidth + gap;
+  });
+  ctx.strokeStyle = "#2e2e2e";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  x = canvas.width - candles.length * (candleWidth + gap);
+
+  candles.forEach(c => {
+    const color = c.close < c.open ? "#b0b0b0" : "#e0e0e0";
 
     // pavio
     ctx.strokeStyle = color;
     ctx.beginPath();
-    ctx.moveTo(c.x + candleWidth / 2, c.high);
-    ctx.lineTo(c.x + candleWidth / 2, c.low);
+    ctx.moveTo(x + candleWidth / 2, c.high);
+    ctx.lineTo(x + candleWidth / 2, c.low);
     ctx.stroke();
 
     // corpo
     ctx.fillStyle = color;
     ctx.fillRect(
-      c.x,
+      x,
       Math.min(c.open, c.close),
       candleWidth,
       Math.abs(c.close - c.open) || 1
     );
+
+    x += candleWidth + gap;
   });
 
-  // recicla velas
-  if (candles[0].x + candleWidth < 0) {
-    candles.shift();
-    const lastX = candles[candles.length - 1].x;
-    candles.push(generateCandle(lastX + candleWidth + gap));
-  }
-
-  requestAnimationFrame(animate);
+  requestAnimationFrame(drawChart);
 }
 
-animate();
+setInterval(newCandle, 650);
+drawChart();
 </script>
+
+</body>
+</html>
