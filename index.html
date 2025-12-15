@@ -1,122 +1,144 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Link da Bio - Trader</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Link da Bio - Trader</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-    body {
-      min-height: 100vh;
-      background: 
-        linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
-        url("https://images.unsplash.com/photo-1640340434855-6084c3f3b0c1");
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+body {
+  min-height: 100vh;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .container {
-      width: 100%;
-      max-width: 380px;
-      padding: 30px 20px;
-      text-align: center;
-    }
+/* FUNDO ANIMADO (GRÁFICO) */
+.background {
+  position: fixed;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.04) 0px,
+      rgba(255,255,255,0.04) 2px,
+      transparent 2px,
+      transparent 60px
+    ),
+    linear-gradient(180deg, #050505, #000);
+  animation: moveBg 12s linear infinite;
+  z-index: 1;
+}
 
-    .trader-name {
-      color: #fff;
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 30px;
-      letter-spacing: 1px;
-    }
+@keyframes moveBg {
+  from { background-position: 0 0; }
+  to { background-position: 600px 0; }
+}
 
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+/* OVERLAY ESCURO */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 2;
+}
 
-    .btn {
-      text-decoration: none;
-      padding: 16px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      text-align: center;
-      color: #fff;
-      background: linear-gradient(135deg, #00ff88, #00c46a);
-      box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
-      transition: all 0.3s ease;
-    }
+.container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 380px;
+  padding: 30px 20px;
+  text-align: center;
+}
 
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(0, 255, 136, 0.7);
-    }
+/* NOME DO TRADER */
+.trader-name {
+  color: #f1f1f1;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+}
 
-    .btn.whatsapp {
-      background: linear-gradient(135deg, #25D366, #128C7E);
-      box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
-    }
+/* BOTÕES */
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
-    .btn.group {
-      background: linear-gradient(135deg, #7f00ff, #3f00ff);
-      box-shadow: 0 0 15px rgba(127, 0, 255, 0.4);
-    }
+.btn {
+  text-decoration: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #e5e5e5;
+  background: linear-gradient(180deg, #1a1a1a, #0f0f0f);
+  border: 1px solid #2a2a2a;
+  transition: all 0.25s ease;
+}
 
-    .footer {
-      margin-top: 30px;
-      font-size: 12px;
-      color: #aaa;
-    }
-  </style>
+.btn:hover {
+  background: #151515;
+  transform: scale(1.03);
+}
+
+.footer {
+  margin-top: 28px;
+  font-size: 11px;
+  color: #777;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="background"></div>
+<div class="overlay"></div>
 
-    <!-- NOME DO TRADER -->
-    <div class="trader-name">
-      THURZIN TRADER
-      <!-- 👆 troque aqui pelo nome desejado -->
-    </div>
+<div class="container">
 
-    <!-- BOTÕES -->
-    <div class="buttons">
+  <!-- NOME DO TRADER -->
+  <div class="trader-name">
+    THURZIN TRADER
+    <!-- troque o nome aqui -->
+  </div>
 
-      <!-- LINK AFILIADO CORRETORA -->
-      <a href="https://SEU-LINK-DE-AFILIADO-AQUI" class="btn" target="_blank">
-        🚀 Criar conta na corretora
-      </a>
+  <div class="buttons">
 
-      <!-- WHATSAPP -->
-      <a href="https://wa.me/5599999999999" class="btn whatsapp" target="_blank">
-        💬 Fale comigo no WhatsApp
-      </a>
+    <!-- LINK AFILIADO -->
+    <a href="https://SEU-LINK-DE-AFILIADO" target="_blank" class="btn">
+      Criar conta na corretora
+    </a>
 
-      <!-- GRUPO DA LIVE -->
-      <a href="https://chat.whatsapp.com/SEU-LINK-DO-GRUPO" class="btn group" target="_blank">
-        🔴 Grupo da Live
-      </a>
+    <!-- WHATSAPP -->
+    <a href="https://wa.me/5599999999999" target="_blank" class="btn">
+      Falar comigo no WhatsApp
+    </a>
 
-    </div>
-
-    <div class="footer">
-      © Todos os direitos reservados
-    </div>
+    <!-- GRUPO -->
+    <a href="https://chat.whatsapp.com/SEU-GRUPO" target="_blank" class="btn">
+      Grupo da Live
+    </a>
 
   </div>
+
+  <div class="footer">
+    Trader profissional • Conteúdo educacional
+  </div>
+
+</div>
 
 </body>
 </html>
